@@ -1,0 +1,21 @@
+/var/log/audit/audit.log
+{
+   copytruncate
+   missingok
+   rotate 90
+   dateext
+   dateformat -%Y%m%d
+   #dateformat -%Y%m%d%H%M
+   daily
+   #hourly
+   compress
+   compresscmd /usr/bin/zstd
+   compressoptions "-12" "-T0"
+   compressext .zst
+   createolddir 0770 root root
+   olddir /var/log/audit/old_logs
+   #sharedscripts
+   #postrotate
+   #    service auditd restart
+   #endscript
+}
