@@ -20,10 +20,13 @@ man_or_dep() {
 		echo "Package: $1 - has not been installed yet."
 	elif [[ ${pkgstate_dep} ]]; then
 		echo "Package: $1 - has been installed as a dependency."
+		echo $pkgstate
 	elif [[ ${pkgstate_local} ]]; then 
 		echo "Package: $1 - has been installed as a separate package."
+		echo $pkgstate
 	else
 		echo "Package: $1 - has been installed manually."
+		echo $pkgstate
 	fi
 }
 
