@@ -12,11 +12,18 @@ pkg=$1
 finddep=$(apt-cache depends $pkg | grep -E "Depends:|Recommends:" | awk '{print $2}')
 
 man_or_dep() {
-	pkgstate=$(apt list --installed 2>/dev/null | grep ^$1 | grep automatic)
+	pkgstate=$(apt list --installed 2>/dev/null | grep ^$1)
+	pkgstate_dep=$(grep automatic <<< "$pkgstate")
+	pkgstate_local=$(grep local <<< "$pkgstate")
+
 	if [[ -z "${pkgstate}" ]]; then
-		echo "Package: $1 - has been installed manually."
-	else
+		echo "Package: $1 - has not been installed yet."
+	elif [[ ${pkgstate_dep} ]]; then
 		echo "Package: $1 - has been installed as a dependency."
+	elif [[ ${pkgstate_local} ]]; then 
+		echo "Package: $1 - has been installed as a separate package."
+	else
+		echo "Package: $1 - has been installed manually."
 	fi
 }
 
