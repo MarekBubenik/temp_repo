@@ -1,0 +1,14 @@
+/var/log/audit/*.log
+{ 
+   copytruncate
+   missingok
+   rotate 30
+   dateext
+   daily
+   compress
+   compresscmd /usr/bin/xz
+   compressoptions "-9"
+   compressext .xz
+   createolddir 0770 root root
+   olddir /var/log/audit/old_logs
+}
